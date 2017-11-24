@@ -1,13 +1,9 @@
-plugins:
-  - react
-
 env:
   es6: true
   browser: true
   node: true
 extends: 
-  - 'eslint:recommended'
-  - 'plugin:react/recommended'
+  - 'airbnb'
 
 parserOptions:
   sourceType: module
@@ -23,3 +19,5 @@ rules:
     - error
     - always
   no-console: 0
+  linebreak-style: 0
+  

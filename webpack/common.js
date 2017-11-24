@@ -14,6 +14,7 @@ const vendor = [
   "react-router",
   "react",
   "redux-saga",
+  "bootstrap"
   // "seamless-immutable",
   // "xhr"
 ];
@@ -56,10 +57,18 @@ module.exports = {
         fallback: "style-loader",
         use: ['css-loader?modules&importLoaders=1&localIdentName=[hash:base64:5]', 'postcss-loader', 'less-loader']
       })
+    },
+    {
+      test: /\.(otf|eot|ttf|woff|woff2|svg)/,
+      use: 'file-loader'
+    },
+    { 
+      test: /\.(png|jpg|gif)$/,
+      use: 'file-loader'
     }
   ],
   resolve: {
-    extensions: ['.webpack-loader.js', '.web-loader.js', '.loader.js', '.ts', '.tsx', '.js', '.jsx'],
+    extensions: ['.webpack-loader.js', '.web-loader.js', '.loader.js', '.js', '.jsx'],
     // devAlias: {
     //   'client': helpers.root('client'),
     //   'framework': helpers.root('client', 'framework'),
@@ -74,8 +83,10 @@ module.exports = {
   },
   plugins: [
     new webpack.ProvidePlugin({
-      "window.jQuery": "jquery",
-      "jQuery": "jquery"
+      'window.jQuery': 'jquery',
+      jQuery: 'jquery',
+      $: 'jquery',
+      Popper: ['popper.js', 'default']
     }),
   ],
 };

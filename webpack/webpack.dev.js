@@ -10,9 +10,9 @@ module.exports = {
   entry: common.entry,
   output: common.output,
   devtool: 'source-map',
- 
+
   module: {
-    rules: common.rules
+    rules: common.rules,
   },
 
   resolve: {
@@ -23,12 +23,12 @@ module.exports = {
   plugins: common.plugins.concat([
     new ExtractTextPlugin('[name]-bundle.css'),
     new webpack.optimize.CommonsChunkPlugin({ name: 'vendor', filename: '[name]-bundle.js' }),
-    new OpenBrowserPlugin({ url: 'http://localhost:3000' })
+    new OpenBrowserPlugin({ url: 'http://localhost:3000' }),
   ]),
 
   devServer: {
     host: '0.0.0.0',
     contentBase: path.join(rootPath, 'src'),
-    hot: true
-  }
+    hot: true,
+  },
 };

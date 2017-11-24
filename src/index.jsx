@@ -1,18 +1,17 @@
-import * as React from "react";
-import * as ReactDOM from "react-dom";
+import * as React from 'react';
+import * as ReactDOM from 'react-dom';
+import 'bootstrap/dist/css/bootstrap.css';
+
+// /* eslint-disable */
+// import * as $ from 'jquery';
+// /* eslint-enable */
+// import 'bootstrap/dist/js/bootstrap.bundle';
+
+import Root from './app/Root';
+
 
 // import Root from "./Root";
 // const fastclick = require("fastclick");
 // fastclick.attach(document.body);
 
-class HomeView extends React.Component {
-  render() {
-    return (
-      <div>
-        Welcome to the machine learning demo site!!
-      </div>
-    );
-  }
-}
-
-ReactDOM.render(<HomeView />, document.getElementById("root"));
+ReactDOM.render(<Root />, document.getElementById('root'));
