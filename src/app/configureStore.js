@@ -1,4 +1,4 @@
-import { browserHistory } from 'react-router';
+import { browserHistory } from 'react-router-dom';
 import { routerMiddleware, routerReducer } from 'react-router-redux';
 import { applyMiddleware, compose, createStore, combineReducers } from 'redux';
 // import { reducer as formReducer } from "redux-form";

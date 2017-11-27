@@ -1,8 +1,9 @@
 import * as React from 'react';
 import { Provider } from 'react-redux';
-import { Router } from 'react-router';
+import { Router } from 'react-router-dom';
 import { syncHistoryWithStore } from 'react-router-redux';
 import { createBrowserHistory } from 'history';
+import Master from '../components/Master';
 
 import configureStore from './configureStore';
 import routes from './routes';
@@ -17,7 +18,9 @@ export default function Root() {
   return (
     <Provider store={store}>
       <Router history={history}>
-        {routes}
+        <Master>
+          {routes}
+        </Master>
       </Router>
     </Provider>
   );

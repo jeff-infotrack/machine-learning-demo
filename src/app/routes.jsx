@@ -1,10 +1,7 @@
 import * as React from 'react';
-import { IndexRoute, Route } from 'react-router';
-import Master from '../containers/Master';
-import SearchClassification from '../containers/SearchClassification';
+import { Route } from 'react-router-dom';
+import SearchClassification from '../components/SearchClassification';
 
 export default (
-  <Route path="/" component={Master}>
-    <IndexRoute component={SearchClassification} />
-  </Route>
+  <Route path="/" component={SearchClassification} />
 );

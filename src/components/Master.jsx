@@ -16,6 +16,10 @@ export default class Master extends React.PureComponent {
   }
 }
 
+Master.defaultProps = {
+  children: <div />,
+};
+
 Master.propTypes = {
-  children: PropTypes.element.isRequired,
+  children: PropTypes.element,
 };
