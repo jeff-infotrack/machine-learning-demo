@@ -9,11 +9,11 @@ const vendor = [
   // "jquery",
   // "classnames",
   "react-dom",
-  "react-redux",
-  "react-router-redux",
+  // "react-redux",
+  // "react-router-redux",
   "react-router-dom",
   "react",
-  "redux-saga",
+  // "redux-saga",
   "bootstrap",
   "react-burger-menu",
   // "seamless-immutable",
@@ -63,7 +63,7 @@ module.exports = {
       test: /\.(otf|eot|ttf|woff|woff2|svg)/,
       use: 'file-loader'
     },
-    { 
+    {
       test: /\.(png|jpg|gif)$/,
       use: 'file-loader'
     }

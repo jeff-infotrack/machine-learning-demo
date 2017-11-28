@@ -1,12 +1,11 @@
 import * as React from 'react';
 import { slide as Menu } from 'react-burger-menu';
-import { Link, withRouter } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import { Link, BrowserRouter as Router, Route } from 'react-router-dom';
 
-import PropTypes from 'prop-types';
+import Home from '../components/Home';
+import SearchClassification from '../components/SearchClassification';
 
-class Master extends React.Component {
+export default class Master extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -49,36 +48,20 @@ class Master extends React.Component {
     };
 
     return (
-      <div id="outer-container">
-        <Menu pageWrapId="page-wrap" outerContainerId="outer-container" styles={styles}>
-          <ul>
-            <li><Link to="/" className="menu-item">Home</Link></li>
-            <li><Link to="/search" className="menu-item">Search Classification</Link></li>
-          </ul>
-        </Menu>
-        <main id="page-wrap">
-          {this.props.children}
-        </main>
-      </div>
+      <Router>
+        <div id="outer-container">
+          <Menu pageWrapId="page-wrap" outerContainerId="outer-container" styles={styles}>
+            <ul>
+              <li><Link to="/" className="menu-item">Home</Link></li>
+              <li><Link to="/search" className="menu-item">Search Classification</Link></li>
+            </ul>
+          </Menu>
+          <main id="page-wrap">
+            <Route exact path="/" component={Home} />
+            <Route path="/search" component={SearchClassification} />
+          </main>
+        </div>
+      </Router>
     );
   }
 }
-
-Master.defaultProps = {
-  children: <div />,
-};
-
-Master.propTypes = {
-  children: PropTypes.any,
-};
-
-const mapStateToProps = state => bindActionCreators({
-  allState: state
-});
-const mapDispatchToProps = dispatch => bindActionCreators({
-}, dispatch);
-
-export default withRouter(connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Master));

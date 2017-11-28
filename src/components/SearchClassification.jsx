@@ -1,9 +1,8 @@
 import * as React from 'react';
-import { connect } from 'react-redux';
 
 const axios = require('axios');
 
-class SearchClassification extends React.Component {
+export default class SearchClassification extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -93,5 +92,3 @@ class SearchClassification extends React.Component {
     );
   }
 }
-
-export default connect(null, null)(SearchClassification);
