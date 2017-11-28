@@ -43,17 +43,21 @@
     "webpack-md5-hash": "0.0.5"
   },
   "dependencies": {
+    "axios": "^0.17.1",
     "bootstrap": "^4.0.0-beta.2",
     "history": "^4.7.2",
     "jquery": "^3.2.1",
+    "numeral": "^2.0.6",
     "popper.js": "^1.12.9",
     "prop-types": "^15.6.0",
     "rc-progress": "^2.2.5",
     "react": "^16.1.1",
+    "react-burger-menu": "^2.1.11",
     "react-dom": "^16.1.1",
     "react-redux": "^5.0.6",
     "react-router-dom": "^4.2.2",
     "react-router-redux": "^4.0.8",
+    "react-svg-piechart": "^1.4.0",
     "redux": "^3.7.2",
     "redux-form": "^7.1.2",
     "redux-saga": "^0.16.0"

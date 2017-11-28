@@ -11,12 +11,13 @@ const vendor = [
   "react-dom",
   "react-redux",
   "react-router-redux",
-  "react-router",
+  "react-router-dom",
   "react",
   "redux-saga",
-  "bootstrap"
+  "bootstrap",
+  "react-burger-menu",
   // "seamless-immutable",
-  // "xhr"
+  "axios"
 ];
 
 module.exports = {
