@@ -59,6 +59,15 @@ module.exports = {
         use: ['css-loader?modules&importLoaders=1&localIdentName=[hash:base64:5]', 'postcss-loader', 'less-loader']
       })
     },
+    // {
+    //   test: /\.less$/,
+    //   include: /src/,
+    //   exclude: '/src/styles/components',
+    //   use: ExtractTextPlugin.extract({
+    //     fallback: "style-loader",
+    //     use: ['css-loader?importLoaders=1', 'postcss-loader', 'less-loader']
+    //   })
+    // },
     {
       test: /\.(otf|eot|ttf|woff|woff2|svg)/,
       use: 'file-loader'

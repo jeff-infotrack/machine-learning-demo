@@ -1,0 +1,110 @@
+:global {
+  @import 'react-burger-menu';
+  @import 'vars/colors';
+  @import 'vars/sizes';
+
+  body {
+    // font-size: @baseFontSize;
+    font-family: 'Raleway', Arial, sans-serif;
+    height: 100%;
+    background: @pageBackgoundColor;
+    color: @fontColorDefault;
+  }
+
+  .bm-menu a {
+    color: @fontColorMenuLink;
+    font-size: 1.2em;
+    padding: 0.2em 0;
+
+    &:hover {
+      color: @fontColorLinkHighlight;
+      text-decoration: none;
+    }
+  }
+
+  main {
+    height: 100%;
+    padding: 3em 2em;
+    text-align: center;
+    overflow: auto;
+    margin: auto;
+  }
+
+  @media (min-width: 1199px) {
+    main {
+      padding: 3em 1em;
+      width: 75vw;
+    }
+  }
+
+  a {
+    color: @fontColorLink;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+
+  h1 {
+    font-weight: 800;
+    margin: 0.7em 0;
+    font-size: 3.75em;
+  }
+
+  h2 {
+    display: block;
+    font-size: 1.5em;
+    -webkit-margin-before: 0.83em;
+    -webkit-margin-after: 0.83em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+    font-weight: bold;
+  }
+
+  .page-title {
+    color: @FontColorDarkGray;
+  }
+
+  .description {
+    max-width: 20em;
+    margin: 1.2em auto 1em;
+    line-height: 1.3em;
+    font-weight: 400;
+  }
+
+  .demo-buttons {
+    font-size: 1em;
+    max-width: 1200px;
+    margin: 2em auto 3em;
+    padding: 0 10em;
+
+    a {
+      display: inline-block;
+      margin: 0.75em;
+      padding: 1.35em 1.1em;
+      width: 15em;
+      background: #fffce1;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 800;
+      border-top-left-radius: 20px 50px;
+      border-top-right-radius: 20px 50px;
+      border-bottom-right-radius: 20px 50px;
+      border-bottom-left-radius: 20px 50px;
+      cursor: pointer;
+
+      &:hover, &:focus {
+        color: @fontColorLinkHighlight;
+      }
+    }
+  }
+
+  .form-control {
+
+    &:focus {
+      border-color: @FontColorDarkGray;
+      box-shadow: 0 0 0 0.2rem rgba(78, 74, 70, 0.25)
+    }
+  }
+}

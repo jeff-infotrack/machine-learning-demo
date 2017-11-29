@@ -5,6 +5,7 @@ env:
 extends: 
   - 'airbnb'
 
+parser: babel-eslint
 parserOptions:
   sourceType: module
   ecmaFeatures:
@@ -27,7 +28,9 @@ rules:
   react/forbid-prop-types: 0
   jsx-a11y/anchor-is-valid: 0
   import/no-unresolved: 0
+  import/extensions: 0
+  dot-notation: 0
+  class-methods-use-this: 0
 
 globals:
   __REDUX_DEVTOOLS_EXTENSION__: true
-  

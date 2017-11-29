@@ -1,4 +1,5 @@
 import * as React from 'react';
+import styles from '../styles/components/search-classfication.less';
 
 const axios = require('axios');
 
@@ -9,12 +10,16 @@ export default class SearchClassification extends React.Component {
       keyword: '',
       result: [],
       resultText: '',
+      isLoading: false,
     };
     this.onSubmit = this.onSubmit.bind(this);
     this.handleKeywordsChange = this.handleKeywordsChange.bind(this);
   }
 
-  onSubmit() {
+  onSubmit(e) {
+    e.preventDefault();
+
+    this.setState({ isLoading: true });
     axios.post('http://10.70.193.118:5000/search_suggestion', {
       key_word: this.state.keyword,
     }).then((res) => {
@@ -36,6 +41,7 @@ export default class SearchClassification extends React.Component {
       } else {
         this.setState({ result: [], resultText: '' });
       }
+      this.setState({ isLoading: false });
     });
   }
 
@@ -44,48 +50,62 @@ export default class SearchClassification extends React.Component {
   }
 
   render() {
-    const { resultText, result } = this.state;
+    const { resultText, result, isLoading } = this.state;
 
     return (
       <div>
-
-        <form>
+        <h1 className="page-title">
+          Search Classification
+        </h1>
+        <h2 className="description">
+          Experiental code testing!!!
+        </h2>
+        <form onSubmit={this.onSubmit}>
           <div className="form-group">
-            <label htmlFor="inpKeywords">
-              Keywords:
-              <input
-                type="text"
-                className="form-control"
-                id="inpKeywords"
-                aria-describedby="keywordHelp"
-                placeholder="Enter keywords"
-                value={this.state.keyword}
-                onChange={this.handleKeywordsChange}
-              />
-            </label>
+            <input
+              type="text"
+              className="form-control"
+              id="inpKeywords"
+              aria-describedby="keywordHelp"
+              placeholder="Enter keywords"
+              value={this.state.keyword}
+              onChange={this.handleKeywordsChange}
+            />
             <small id="keywordHelp" className="form-text text-muted">
               Please enter address, VIN, person name or property titles above.
             </small>
           </div>
-          <button type="button" className="btn btn-primary" onClick={this.onSubmit}>
+          <button type="submit" className="btn btn-secondary btn-lg">
             Submit
           </button>
         </form>
-        <strong>{resultText}</strong>
         <br />
-        {
-          result &&
-          result.length > 0 &&
-          // <PieChart data={this.state.result} />
-          result.map((element, i) => (
-            <div key={element.label}>
-              <span style={{ background: element.color }} />
-              <span style={{ fontWeight: this.state.expandedSector === i ? 'bold' : null }}>
-                {element.label}: {element.value}
-              </span>
-            </div>
-          ))
-        }
+        <div className={styles['result']}>
+          {
+            isLoading ?
+              <div>Loading...</div>
+              :
+              (
+                result &&
+                result.length > 0 &&
+                <div>
+                  <h3>{resultText.toLowerCase()}</h3>
+                  {
+                    <div style={{ marginTop: '25px' }}>
+                      {result.map((element, i) => (
+                        <div key={element.label}>
+                          <span style={{ background: element.color }} />
+                          <span style={{ fontWeight: this.state.expandedSector === i ? 'bold' : null }}>
+                            {element.label}: {element.originalValue}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  }
+                </div>
+              )
+          }
+        </div>
 
       </div>
 
