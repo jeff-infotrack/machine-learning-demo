@@ -1,19 +1,18 @@
-plugins:
-  - react
-
 env:
   es6: true
   browser: true
   node: true
 extends: 
-  - 'eslint:recommended'
-  - 'plugin:react/recommended'
+  - 'airbnb'
 
+parser: babel-eslint
 parserOptions:
   sourceType: module
   ecmaFeatures:
     experimentalObjectRestSpread: true
     jsx: true
+    classes: true
+    arrowFunctions: true
 
 rules:
   indent:
@@ -23,3 +22,15 @@ rules:
     - error
     - always
   no-console: 0
+  linebreak-style: 0
+  comma-dangle: 0
+  max-length: 0
+  react/forbid-prop-types: 0
+  jsx-a11y/anchor-is-valid: 0
+  import/no-unresolved: 0
+  import/extensions: 0
+  dot-notation: 0
+  class-methods-use-this: 0
+
+globals:
+  __REDUX_DEVTOOLS_EXTENSION__: true

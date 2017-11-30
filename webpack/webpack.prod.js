@@ -28,7 +28,7 @@ module.exports = {
       }),
       new WebpackMd5Hash(),
       new HtmlWebpackPlugin({
-        template: 'src/index.html'
+        template: 'src/indexTemplate.html'
       }),
       new webpack.optimize.UglifyJsPlugin({
         beautify: false,
