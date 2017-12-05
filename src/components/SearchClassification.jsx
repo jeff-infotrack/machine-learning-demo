@@ -20,7 +20,7 @@ export default class SearchClassification extends React.Component {
     e.preventDefault();
 
     this.setState({ isLoading: true });
-    axios.post('http://10.70.193.118:5000/search_suggestion', {
+    axios.post('http://10.70.193.118:5000/search_box/search_suggestion', {
       key_word: this.state.keyword,
     }).then((res) => {
       if (res.data) {

@@ -8,7 +8,7 @@
     "clean": "rimraf ./dist/*.*",
     "webpack-build": "webpack --config ./webpack/webpack.prod.js -p",
     "build": "npm run clean && npm run webpack-build",
-    "deploy": "npm run build && aws s3 sync ./dist s3://site-machine-learning-demo --delete"
+    "deploy": "npm run build && aws s3 sync ./dist s3://demos.infotracklabs.com --delete"
   },
   "author": "Zhengmin (Jeff)",
   "license": "ISC",
