@@ -13,6 +13,7 @@ export default () => (
     </h2>
     <nav className="demo-buttons">
       <Link to="/search-class" className="current-demo">Search Classification</Link>
+      <Link to="/service-suggestion" className="current-demo">Service Suggestion</Link>
     </nav>
   </div>
 );

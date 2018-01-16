@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import Master from '../components/Master';
+import Master from '../pages/Master';
 
 export default function Root() {
   return (

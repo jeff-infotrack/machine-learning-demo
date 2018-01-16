@@ -21,6 +21,7 @@ rules:
   semi:
     - error
     - always
+  no-unused-vars: 1
   no-console: 0
   linebreak-style: 0
   comma-dangle: 0
@@ -29,8 +30,12 @@ rules:
   jsx-a11y/anchor-is-valid: 0
   import/no-unresolved: 0
   import/extensions: 0
+  import/prefer-default-export: 0
   dot-notation: 0
   class-methods-use-this: 0
+  no-empty:
+  - error
+  - allowEmptyCatch: true
 
 globals:
   __REDUX_DEVTOOLS_EXTENSION__: true
