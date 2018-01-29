@@ -1,7 +1,7 @@
-import * as React from 'react';
-import PropTypes from 'prop-types';
 import $ from 'jquery';
 import _ from 'lodash';
+import PropTypes from 'prop-types';
+import * as React from 'react';
 
 export default class NboSuggestions extends React.PureComponent {
   constructor() {
@@ -45,7 +45,7 @@ export default class NboSuggestions extends React.PureComponent {
                     {
                       toppedServices.map(s => (
                         <li key={s.serviceid}>
-                          <a href="#" onClick={this.clickHandler} sid={s.serviceid}>{s.service_desc || s.serviceid}</a>
+                          <a href="#" onClick={this.clickHandler} sid={s.serviceid}>{s.service}</a>
                         </li>
                       ))
                     }
