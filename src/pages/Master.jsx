@@ -32,7 +32,6 @@ export default class Master extends Component {
 
   render() {
     const { isMenuOpen } = this.state;
-    const { pathname } = window.location;
 
     return (
       <Router>
