@@ -1,3 +1,5 @@
+import axios from 'axios';
+import $ from 'jquery';
 import * as React from 'react';
 
 import { getOcrUploadSignedUrl } from '../api';
@@ -8,12 +10,63 @@ export default class OCR extends React.Component {
     super(props);
     this.state = {
       file: '',
-      imagePreviewUrl: ''
+      imagePreviewUrl: '',
+      uploadPercent: 0
     };
   }
 
   async upload() {
     const getUrlRes = await getOcrUploadSignedUrl(this.state.file.name);
+
+    if (getUrlRes.status === 200 && getUrlRes.data.url) {
+      const { file } = this.state;
+      // const data = new FormData();
+      // data.append('file', file);
+
+      // const config = {
+      //   headers: {
+      //     'Content-Type': file.type
+      //   },
+      //   onUploadProgress: (progressEvent) => {
+      //     const percent = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+
+      //     this.setState({
+      //       uploadPercent: percent
+      //     });
+      //   }
+      // };
+
+      // try {
+      //   const uploadRes = await (axios.put(getUrlRes.data.url, data, config));
+      //   console.log(uploadRes);
+      // } catch (err) {
+      //   console.log(err);
+      // }
+
+      await $.ajax({
+        async: true,
+        url: getUrlRes.data.url,
+        type: 'PUT',
+        data: file,
+        processData: false,
+        contentType: file.type,
+        xhr: () => {
+          const xhr = $.ajaxSettings.xhr();
+          if (xhr.upload) {
+            xhr.upload.addEventListener('progress', (e) => {
+              if (e.lengthComputable) {
+                const percent = Math.round((e.loaded * 100) / e.total);
+                // curUploadProgressBar.css('width', percentage + '%');
+                this.setState({
+                  uploadPercent: percent
+                });
+              }
+            }, false);
+          }
+          return xhr;
+        }
+      });
+    }
   }
 
   handleSubmit(e) {
@@ -40,7 +93,7 @@ export default class OCR extends React.Component {
   }
 
   render() {
-    const { imagePreviewUrl } = this.state;
+    const { imagePreviewUrl, uploadPercent } = this.state;
     let $imagePreview = null;
     if (imagePreviewUrl) {
       $imagePreview = (<img src={imagePreviewUrl} alt="License preview" />);
@@ -67,6 +120,7 @@ export default class OCR extends React.Component {
         <div className={styles['imgPreview']}>
           {$imagePreview}
         </div>
+        <span>{uploadPercent}%</span>
       </div>
     );
   }
