@@ -62,7 +62,7 @@ export default class Master extends Component {
             >Service Suggestion
             </Link>
             <Link
-              to="/service-suggestion"
+              to="/ocr"
               className={this.getLinkClass('/ocr')}
               onClick={this.menuItemClick}
             >OCR
