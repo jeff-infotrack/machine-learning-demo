@@ -21,11 +21,23 @@ h3 {
   border-right: 1px solid gray;
   border-top: 5px solid gray;
   border-bottom: 5px solid gray;
+  min-height: 80px;
 
+  div {
+    pointer-events: none;
+  }
   img {
+    pointer-events: none;
     max-height: 500px;
     max-width: 500px;
   }
+}
+
+.imgPreview-dragging {
+  border-left: 1px dashed gray;
+  border-right: 1px dashed gray;
+  border-top: 5px dashed gray;
+  border-bottom: 5px dashed gray;
 }
 
 .previewText {
@@ -53,3 +65,10 @@ h3 {
   text-align: center;
   width: 500px;
 }
+
+.resultSet {
+  border: solid 2px #4F4B48;
+  margin: 5px;
+  padding: 5px;
+}
+

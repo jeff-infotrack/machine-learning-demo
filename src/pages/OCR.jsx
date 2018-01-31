@@ -1,4 +1,4 @@
-// import axios from 'axios';
+import classnames from 'classnames';
 import $ from 'jquery';
 import * as React from 'react';
 
@@ -12,38 +12,142 @@ export default class OCR extends React.Component {
       file: '',
       imagePreviewUrl: '',
       uploadPercent: undefined,
-      document: ''
+      dragging: false,
+      processing: false,
+      document: '',
+      validDocument: false,
+      documentDetails: undefined
     };
   }
 
-  async upload() {
+  onDropHandler(e) {
+    e.preventDefault();
+    this.setDragging(false);
+    console.log(e);
+
+    const dt = e.dataTransfer;
+    // if (dt.items) {
+    //   // Use DataTransferItemList interface to access the file(s)
+    //   for (let i = 0; i < dt.items.length; i++) {
+    //     if (dt.items[i].kind === 'file') {
+    //       const f = dt.items[i].getAsFile();
+    //       console.log(`item: file[${i}].name = ${f.name}`);
+    //     }
+    //   }
+    // } else {
+    //   // Use DataTransfer interface to access the file(s)
+
+    // }
+
+    for (let i = 0; i < dt.files.length; i++) {
+      console.log(`file file[${i}].name = ${dt.files[i].name}`);
+    }
+    if (dt.files) {
+      this.setState(
+        {
+          file: dt.files[0]
+        },
+        () => {
+          $('input:file').files = [this.state.file];
+          this.previewImage(this.state.file);
+        }
+      );
+    }
+  }
+
+  getDocumentName(document) {
+    let name = 'Unknown';
+
+    switch ((document || '').toLowerCase()) {
+      case 'driverlicence':
+        name = 'Driver Licence';
+        break;
+      case 'passport':
+        name = 'Passport';
+        break;
+      default:
+        break;
+    }
+
+    return name;
+  }
+
+  setDragging(on = true) {
+    if (this.state.dragging !== on) {
+      this.setState({
+        dragging: on
+      });
+    }
+  }
+
+  setProcessing(on = true) {
+    if (this.state.processing !== on) {
+      this.setState({
+        processing: on
+      });
+    }
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+    console.log('handle uploading-', this.state.file);
+    this.process();
+  }
+
+  handleImageChange(e) {
+    e.preventDefault();
+    const file = e.target.files[0];
+    this.previewImage(file);
+  }
+
+  previewImage(file) {
+    if (!file) {
+      return;
+    }
+
+    const reader = new FileReader();
+
+    reader.onloadend = () => {
+      this.setState({
+        file,
+        imagePreviewUrl: reader.result
+      });
+    };
+
+    reader.readAsDataURL(file);
+  }
+
+  clearResults() {
+    this.setState({
+      uploadPercent: undefined,
+      document: '',
+      documentDetails: undefined
+    });
+  }
+
+  dragEnterHandler(e) {
+    e.preventDefault();
+    this.setDragging(true);
+    console.log('enter');
+  }
+
+  dragOverHandler(e) {
+    e.preventDefault();
+  }
+
+  dragLeaveHandler(e) {
+    e.preventDefault();
+    this.setDragging(false);
+    console.log('leave');
+  }
+
+  async process() {
+    this.clearResults();
     const getUrlRes = await getOcrUploadSignedUrl(this.state.file.name);
 
     if (getUrlRes.status === 200 && getUrlRes.data.url) {
       const { file } = this.state;
       const { key, url } = getUrlRes.data;
-      // const data = new FormData();
-      // data.append('file', file);
-
-      // const config = {
-      //   headers: {
-      //     'Content-Type': file.type
-      //   },
-      //   onUploadProgress: (progressEvent) => {
-      //     const percent = Math.round((progressEvent.loaded * 100) / progressEvent.total);
-
-      //     this.setState({
-      //       uploadPercent: percent
-      //     });
-      //   }
-      // };
-
-      // try {
-      //   const uploadRes = await (axios.put(getUrlRes.data.url, data, config));
-      //   console.log(uploadRes);
-      // } catch (err) {
-      //   console.log(err);
-      // }
 
       try {
         await $.ajax({
@@ -69,56 +173,61 @@ export default class OCR extends React.Component {
           }
         });
 
+        this.setProcessing();
+
         const classRes = await ocrImageClassification(key);
         console.log(classRes);
         if (classRes.status === 200) {
           this.setState({
-            document: classRes.data.Document
+            document: classRes.data.document
           });
         }
 
-        // const textDetectRes = await ocrImageTextDetect(key, this.state.document);
-        // if (textDetectRes.status === 200) {
-        //   this.setstate({
+        const textDetectRes = await ocrImageTextDetect(key, this.state.document);
+        if (textDetectRes.status === 200) {
+          const documentDetails = textDetectRes.data;
 
-        //   });
-        // }
+          const validDocument = Object
+            .keys(documentDetails)
+            .reduce((valid, curVal) => valid || documentDetails(curVal));
+
+          this.setState({
+            validDocument,
+            documentDetails
+          });
+          console.log(this.state.documentDetails);
+        }
       } catch (err) {
         console.log(err);
       }
+
+      this.setProcessing(false);
     }
   }
 
-  handleSubmit(e) {
-    e.preventDefault();
-    console.log('handle uploading-', this.state.file);
-    this.upload();
-  }
-
-  handleImageChange(e) {
-    e.preventDefault();
-
-    const reader = new FileReader();
-    const file = e.target.files[0];
-
-    reader.onloadend = () => {
-      this.setState({
-        file,
-        imagePreviewUrl: reader.result
-      });
-    };
-
-    reader.readAsDataURL(file);
-  }
-
   render() {
-    const { imagePreviewUrl, uploadPercent, document } = this.state;
+    const {
+      imagePreviewUrl, uploadPercent, processing, document, validDocument, documentDetails, dragging
+    } = this.state;
+
+    const previewText = dragging ?
+      'Please drop the image here to preview.' :
+      'Please select an image containing your driver licence / passport for upload, or you can Drag & Drop here to upload.';
+
     let $imagePreview = null;
     if (imagePreviewUrl) {
       $imagePreview = (<img src={imagePreviewUrl} alt="License preview" />);
     } else {
-      $imagePreview = (<div className={styles['previewText']}>Please select an image containing your driver licence / passport for preview</div>);
+      $imagePreview = (
+        <div className={styles['previewText']}>{previewText}</div>
+      );
     }
+
+    const documentName = this.getDocumentName(document);
+    const previewClass = classnames(
+      styles['imgPreview'],
+      this.state.dragging ? styles['imgPreview-dragging'] : undefined
+    );
 
     return (
       <div className={styles['previewComponent']}>
@@ -139,18 +248,42 @@ export default class OCR extends React.Component {
             Upload Image
           </button>
         </form>
-        <div className={styles['imgPreview']}>
+        <div
+          className={previewClass}
+          onDragEnter={e => this.dragEnterHandler(e)}
+          onDragOver={e => this.dragOverHandler(e)}
+          onDragLeave={e => this.dragLeaveHandler(e)}
+          onDrop={e => this.onDropHandler(e)}
+        >
           {$imagePreview}
         </div>
         <span>
-          {uploadPercent && `${uploadPercent}%`}
+          {uploadPercent && (uploadPercent < 100 ? `Upload progress: ${uploadPercent}%` : <strong>Uploaded</strong>)}
         </span>
         {
-          document &&
+          processing && <div>Processing...</div>
+        }
+        {
+          !processing &&
           <div>
-            {document}
+            {
+              document &&
+              <h3 className={styles['resultSet']}>
+                {documentName}
+              </h3>
+            }
+            {
+              validDocument &&
+              documentDetails &&
+              <div className={styles['resultSet']}>
+                {
+                  Object.keys(documentDetails).map(key => <div key={key}><strong style={{ color: '#4F4B48' }}>{key}</strong>: {documentDetails[key]}</div>)
+                }
+              </div>
+            }
           </div>
         }
+
       </div>
     );
   }
