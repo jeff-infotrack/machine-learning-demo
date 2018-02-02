@@ -14,6 +14,7 @@ export default () => (
     <nav className="demo-buttons">
       <Link to="/search-class" className="current-demo">Search Classification</Link>
       <Link to="/service-suggestion" className="current-demo">Service Suggestion</Link>
+      <Link to="/ocr" className="current-demo">Driver License / Passport OCR</Link>
     </nav>
   </div>
 );

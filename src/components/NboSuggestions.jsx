@@ -45,7 +45,7 @@ export default class NboSuggestions extends React.PureComponent {
                     {
                       toppedServices.map(s => (
                         <li key={s.serviceid}>
-                          <a href="#" onClick={this.clickHandler} sid={s.serviceid}>{s.service}</a>
+                          <a href="#" onClick={this.clickHandler} sid={s.serviceid}>{s.service_desc || s.service}</a>
                         </li>
                       ))
                     }

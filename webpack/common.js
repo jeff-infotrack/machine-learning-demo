@@ -6,9 +6,10 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const rootPath = path.resolve(__dirname, '..');
 
 const vendor = [
-  // "jquery",
-  // "classnames",
+  "jquery",
+  "classnames",
   "react-dom",
+  "lodash",
   // "react-redux",
   // "react-router-redux",
   "react-router-dom",

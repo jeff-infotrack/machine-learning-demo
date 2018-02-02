@@ -7,7 +7,10 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: common.entry,
-  output: common.output,
+  output: {
+    ...common.output,
+    filename: '[name]-bundle-[hash].js'
+  },
   devtool: 'hidden-source-map',
 
   module: {
