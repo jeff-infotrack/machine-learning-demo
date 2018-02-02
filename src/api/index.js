@@ -41,18 +41,17 @@ export const getNboSuggestions = async serviceId => axios.get(`${api2}/nbo_model
   params: { serviceid: serviceId }
 });
 
-const OcrBucketName = 'infotracklabs-image-ocr';
-
 export const getOcrUploadSignedUrl = async fileName => axios.post(`${api3}/get-s3-upload-url`, {
-  Bucket: OcrBucketName,
   Key: fileName
 });
 export const ocrImageClassification = async s3Key => axios.post(`${api3}/image-classifier`, {
-  Bucket: OcrBucketName,
   Key: s3Key
+}, {
+  validateStatus: status => status < 500
 });
 export const ocrImageTextDetect = async (s3Key, docType) => axios.post(`${api3}/image-text-detect`, {
-  Bucket: OcrBucketName,
   Key: s3Key,
   DocType: docType
+}, {
+  validateStatus: status => status < 500
 });

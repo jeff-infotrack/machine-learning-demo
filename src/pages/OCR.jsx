@@ -15,7 +15,7 @@ export default class OCR extends React.Component {
       dragging: false,
       processing: false,
       document: '',
-      validDocument: false,
+      validDocument: undefined,
       documentDetails: undefined
     };
   }
@@ -121,6 +121,7 @@ export default class OCR extends React.Component {
     this.setState({
       uploadPercent: undefined,
       document: '',
+      validDocument: undefined,
       documentDetails: undefined
     });
   }
@@ -185,17 +186,16 @@ export default class OCR extends React.Component {
 
         const textDetectRes = await ocrImageTextDetect(key, this.state.document);
         if (textDetectRes.status === 200) {
-          const documentDetails = textDetectRes.data;
-
-          const validDocument = Object
-            .keys(documentDetails)
-            .reduce((valid, curVal) => valid || documentDetails(curVal));
-
           this.setState({
-            validDocument,
-            documentDetails
+            validDocument: true,
+            documentDetails: textDetectRes.data
           });
           console.log(this.state.documentDetails);
+        } else {
+          this.setState({
+            validDocument: false,
+            documentDetails: undefined
+          });
         }
       } catch (err) {
         console.log(err);
@@ -267,6 +267,7 @@ export default class OCR extends React.Component {
           !processing &&
           <div>
             {
+              validDocument &&
               document &&
               <h3 className={styles['resultSet']}>
                 {documentName}
@@ -280,6 +281,10 @@ export default class OCR extends React.Component {
                   Object.keys(documentDetails).map(key => <div key={key}><strong style={{ color: '#4F4B48' }}>{key}</strong>: {documentDetails[key]}</div>)
                 }
               </div>
+            }
+            {
+              validDocument === false &&
+              <div style={{ color: 'red', fontWeight: '600' }}>Invalid image</div>
             }
           </div>
         }
